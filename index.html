@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess AI — the coach in your pocket</title>
+<meta name="description" content="Play chess against an AI that adapts to you, then get real coaching on every mistake. Game review, puzzles, and lessons — free to play.">
+<meta property="og:title" content="Chess AI — the coach in your pocket">
+<meta property="og:description" content="Play an opponent that adapts to you. Get coaching on every mistake.">
+<meta property="og:image" content="https://getchessai.com/assets/shot-analysis.png">
+<link rel="icon" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<style>
+:root {
+  --ground: #14100D; --panel: #1F1813; --panel2: #2A2118;
+  --ink: #F2E8D8; --muted: #A6947D; --line: #3A2F26;
+  --cream: #F0D9B5; --brown: #B58863;
+  --green: #7FB84A; --green-deep: #5E9130; --dia: #6FA8E0;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mono: "SF Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; margin: 0; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Nav */
+nav { position: sticky; top: 0; z-index: 10; background: rgba(20,16,13,.86);
+  backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; gap: 28px; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif);
+  font-size: 20px; font-weight: 700; text-decoration: none; }
+.brand img { width: 32px; height: 32px; border-radius: 8px; }
+nav .links { margin-left: auto; display: flex; gap: 22px; }
+nav .links a { text-decoration: none; color: var(--muted); font-size: 15px; }
+nav .links a:hover { color: var(--ink); }
+.cta { background: var(--green); color: #101408 !important; font-weight: 700;
+  padding: 9px 18px; border-radius: 999px; text-decoration: none; font-size: 15px; }
+.cta:hover { background: #8fca58; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: 84px 0 40px; }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto auto;
+  width: 720px; height: 720px; opacity: .05; pointer-events: none;
+  background: conic-gradient(var(--cream) 90deg, var(--brown) 90deg 180deg,
+    var(--cream) 180deg 270deg, var(--brown) 270deg);
+  background-size: 180px 180px; transform: rotate(8deg); }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(44px, 6vw, 68px); line-height: 1.04; }
+.hero h1 em { font-style: normal; color: var(--cream); }
+.hero p.lede { font-size: 21px; color: var(--muted); max-width: 34ch; margin: 22px 0 30px; }
+.hero .actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.hero .actions .sub { color: var(--muted); font-size: 14px; }
+.bigcta { background: var(--green); color: #101408; font-weight: 800; font-size: 18px;
+  padding: 16px 30px; border-radius: 999px; text-decoration: none;
+  box-shadow: 0 12px 40px rgba(127,184,74,.25); }
+.bigcta:hover { background: #8fca58; }
+
+/* Phone frame */
+.phone { border-radius: 44px; border: 1px solid #443729; background: #000;
+  padding: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.4);
+  max-width: 340px; margin: 0 auto; }
+.phone img { border-radius: 34px; }
+.phone.glow-green { box-shadow: 0 30px 90px rgba(127,184,74,.18), 0 8px 24px rgba(0,0,0,.5); }
+.phone.glow-cream { box-shadow: 0 30px 90px rgba(240,217,181,.14), 0 8px 24px rgba(0,0,0,.5); }
+.phone.glow-blue  { box-shadow: 0 30px 90px rgba(111,168,224,.16), 0 8px 24px rgba(0,0,0,.5); }
+
+/* Feature sections */
+section.feature { padding: 90px 0; border-top: 1px solid var(--line); }
+section.feature .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+section.feature.flip .wrap > .copy { order: 2; }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 14px; }
+.eyebrow.cream { color: var(--cream); }
+.eyebrow.blue { color: var(--dia); }
+section.feature h2 { font-size: clamp(30px, 3.6vw, 42px); line-height: 1.12; margin-bottom: 18px; }
+section.feature p { color: var(--muted); font-size: 18px; max-width: 46ch; }
+.points { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
+.points li { padding-left: 26px; position: relative; color: var(--ink); font-size: 16px; }
+.points li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+
+/* Pricing */
+#pricing { padding: 90px 0; border-top: 1px solid var(--line); }
+#pricing h2 { font-size: clamp(30px, 3.6vw, 42px); text-align: center; }
+#pricing .sub { text-align: center; color: var(--muted); margin: 12px 0 44px; }
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.tier { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+.tier.dia { border-color: var(--dia); background: linear-gradient(180deg, rgba(111,168,224,.08), var(--panel) 40%); }
+.tier .name { font-family: var(--serif); font-size: 22px; font-weight: 700; }
+.tier .price { font-size: 34px; font-weight: 800; margin: 12px 0 2px; font-variant-numeric: tabular-nums; }
+.tier .per { color: var(--muted); font-size: 14px; min-height: 40px; }
+.tier ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 9px; }
+.tier li { padding-left: 24px; position: relative; font-size: 15px; color: var(--ink); }
+.tier li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; color: var(--muted); }
+.tier.plat li::before { color: var(--cream); }
+.tier.dia li::before { color: var(--dia); }
+.tier .tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  border-radius: 999px; padding: 3px 10px; margin-bottom: 10px; text-transform: uppercase; }
+.tier.free .tag { background: #3a3229; color: var(--muted); }
+.tier.plat .tag { background: rgba(240,217,181,.15); color: var(--cream); }
+.tier.dia .tag { background: rgba(111,168,224,.18); color: var(--dia); }
+.compare { text-align: center; color: var(--muted); font-size: 14px; margin-top: 26px; }
+
+/* Final CTA + footer */
+.finale { text-align: center; padding: 100px 24px; border-top: 1px solid var(--line); }
+.finale h2 { font-size: clamp(32px, 4vw, 48px); margin-bottom: 14px; }
+.finale p { color: var(--muted); margin: 0 0 30px; }
+footer { border-top: 1px solid var(--line); padding: 34px 0; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--ink); }
+footer .spacer { margin-left: auto; }
+
+@media (max-width: 860px) {
+  .hero .wrap, section.feature .wrap { grid-template-columns: 1fr; gap: 40px; }
+  section.feature.flip .wrap > .copy { order: 0; }
+  .tiers { grid-template-columns: 1fr; }
+  .hero { padding-top: 48px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .phone { transition: transform .35s ease; }
+  .phone:hover { transform: translateY(-6px); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.png" alt="">Chess AI</a>
+    <div class="links">
+      <a href="#review">Game Review</a>
+      <a href="#learn">Learn</a>
+      <a href="#pricing">Pricing</a>
+      <a href="support.html">Support</a>
+    </div>
+    <a class="cta" href="#pricing">Get the app</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <h1>Every game<br>makes you <em>better.</em></h1>
+      <p class="lede">Play an opponent that adapts to you — then get real coaching on every mistake. Chess AI is the coach in your pocket.</p>
+      <div class="actions">
+        <a class="bigcta" href="#pricing">Coming soon to the App&nbsp;Store</a>
+        <span class="sub">Free to play · iPhone</span>
+      </div>
+    </div>
+    <div class="phone glow-green"><img src="assets/shot-analysis.png" alt="Game review: eval graph, accuracies, and key moments"></div>
+  </div>
+</header>
+
+<section class="feature" id="play">
+  <div class="wrap">
+    <div class="copy">
+      <div class="eyebrow cream">Play</div>
+      <h2>An opponent that always gives you a chance</h2>
+      <p>Stockfish-powered, but never crushing. Auto mode tracks your rating and recent games, promotes you when you're winning, and eases off when you're not — the sweet spot where improvement happens.</p>
+      <ul class="points">
+        <li>Bullet, blitz, rapid, classical &amp; custom time controls</li>
+        <li>Ten strength levels, or let Auto find yours</li>
+        <li>Glicko-2 ratings, streaks, and full game history</li>
+      </ul>
+    </div>
+    <div class="phone glow-cream"><img src="assets/shot-home.png" alt="Home screen: time control tiles and ratings"></div>
+  </div>
+</section>
+
+<section class="feature flip" id="review">
+  <div class="wrap">
+    <div class="copy">
+      <div class="eyebrow">Game Review</div>
+      <h2>See exactly where the game turned</h2>
+      <p>After every game, Chess AI walks you through your key moments — what you played, what was better, and why, in plain language. Powered by advanced AI that writes like a coach, not an engine log.</p>
+      <ul class="points">
+        <li>Win-chance graph and accuracy for both sides</li>
+        <li>Coach's notes on every mistake</li>
+        <li>Replay any moment against the engine until you get it right</li>
+      </ul>
+    </div>
+    <div class="phone glow-green"><img src="assets/shot-analysis.png" alt="Analysis screen with win-probability graph"></div>
+  </div>
+</section>
+
+<section class="feature" id="learn">
+  <div class="wrap">
+    <div class="copy">
+      <div class="eyebrow blue">Learn</div>
+      <h2>Puzzles and lessons that match your weaknesses</h2>
+      <p>Six puzzle themes — mates, forks, pins, hanging pieces, endgames — mirror the same taxonomy your coach uses, so "you keep missing forks" comes with a fix. New to chess? Nine guided lessons take you from how the rook moves to your first checkmate.</p>
+      <ul class="points">
+        <li>240 curated puzzles across six themes</li>
+        <li>Interactive lessons on a real board</li>
+        <li>All free, forever</li>
+      </ul>
+    </div>
+    <div class="phone glow-blue"><img src="assets/shot-learn.png" alt="Learn tab: puzzle categories and lessons"></div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Choose your coach</h2>
+    <p class="sub">Play free forever. Upgrade when you want the coach on every game.</p>
+    <div class="tiers">
+      <div class="tier free">
+        <span class="tag">Free</span>
+        <div class="name">Play &amp; Learn</div>
+        <div class="price">$0</div>
+        <div class="per">forever</div>
+        <ul>
+          <li>Unlimited games vs the adaptive AI</li>
+          <li>All puzzles &amp; lessons</li>
+          <li>Ratings, streaks &amp; history</li>
+          <li>1 Game Review every week</li>
+        </ul>
+      </div>
+      <div class="tier plat">
+        <span class="tag">Platinum</span>
+        <div class="name">Your AI Coach</div>
+        <div class="price">$7.99<span style="font-size:16px;font-weight:600;color:var(--muted)">/mo</span></div>
+        <div class="per">or $59.99/year — save 37%</div>
+        <ul>
+          <li>Unlimited Game Review with coach notes</li>
+          <li>Retry training on your mistakes</li>
+          <li>Auto insights after every game</li>
+          <li>5 advanced AI deep reviews a month</li>
+        </ul>
+      </div>
+      <div class="tier dia">
+        <span class="tag">Diamond</span>
+        <div class="name">Advanced AI analysis</div>
+        <div class="price">$12.99<span style="font-size:16px;font-weight:600;color:var(--muted)">/mo</span></div>
+        <div class="per">or $99.99/year — save 36%</div>
+        <ul>
+          <li>Everything in Platinum</li>
+          <li>Every review by our most advanced AI</li>
+          <li>Coach's Overview: your cross-game assessment</li>
+          <li>Highest limits, first access to new features</li>
+        </ul>
+      </div>
+    </div>
+    <p class="compare">Subscriptions are billed through the App&nbsp;Store and can be canceled anytime in your Apple&nbsp;ID settings.</p>
+  </div>
+</section>
+
+<div class="finale">
+  <h2>Your next game is a lesson.</h2>
+  <p>Chess AI is coming soon to the App Store for iPhone.</p>
+  <a class="bigcta" href="mailto:support@getchessai.com?subject=Notify%20me">Get notified at launch</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Hensu LLC</span>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+    <span class="spacer"></span>
+    <span>Made with Stockfish (GPL) — engine strength, human coaching.</span>
+  </div>
+</footer>
+
+</body>
+</html>

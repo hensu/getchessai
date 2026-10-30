@@ -9,6 +9,14 @@
 <meta property="og:image" content="https://getchessai.com/assets/icon.png">
 <meta name="apple-itunes-app" content="app-id=6790178402">
 <link rel="icon" href="../assets/icon.png">
+<!-- GA4 (same property as the app): invite funnel for people without the app. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8JG1S0FTK3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8JG1S0FTK3', { page_title: 'Invite' });
+</script>
 <style>
 :root { --ground:#14100D; --panel:#1F1813; --ink:#F2E8D8; --muted:#A6947D; --line:#3A2F26; --green:#7FB84A;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
@@ -47,6 +55,13 @@ ol { text-align:left; color:var(--muted); padding-left:22px; margin-top:28px; }
     document.getElementById("code").textContent = code;
     document.getElementById("open").href = "chessmaster://play?g=" + code;
   }
+  gtag('event', 'invite_page_viewed', { has_code: code ? 'true' : 'false' });
+  document.querySelector('.primary').addEventListener('click', function () {
+    gtag('event', 'invite_appstore_clicked');
+  });
+  document.getElementById('open').addEventListener('click', function () {
+    gtag('event', 'invite_open_app_clicked');
+  });
 </script>
 </body>
 </html>

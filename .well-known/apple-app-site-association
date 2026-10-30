@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["BD3U76LB98.com.hensu.chessmaster"],
+        "components": [{ "/": "/play*", "comment": "Friend-game invite links" }]
+      }
+    ]
+  }
+}

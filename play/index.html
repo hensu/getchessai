@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You're invited to a game — Chess AI</title>
+<meta property="og:title" content="You're invited to a game of chess">
+<meta property="og:description" content="Tap to play me live on Chess AI.">
+<meta property="og:image" content="https://getchessai.com/assets/icon.png">
+<meta name="apple-itunes-app" content="app-id=6790178402">
+<link rel="icon" href="../assets/icon.png">
+<style>
+:root { --ground:#14100D; --panel:#1F1813; --ink:#F2E8D8; --muted:#A6947D; --line:#3A2F26; --green:#7FB84A;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+body { margin:0; background:var(--ground); color:var(--ink);
+  font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+main { max-width:440px; margin:0 auto; padding:56px 24px 80px; text-align:center; }
+img.logo { width:84px; height:84px; border-radius:20px; }
+h1 { font-family:var(--serif); font-size:30px; margin:20px 0 8px; }
+p { color:var(--muted); margin:8px 0; }
+.code { font:700 34px/1 ui-monospace,Menlo,monospace; letter-spacing:6px; background:var(--panel);
+  border:1px solid var(--line); border-radius:14px; padding:16px; margin:24px 0 8px; }
+.btn { display:block; padding:15px; border-radius:14px; font-weight:700; text-decoration:none; margin-top:14px; }
+.primary { background:var(--green); color:#14100D; }
+.secondary { border:1px solid var(--line); color:var(--ink); }
+ol { text-align:left; color:var(--muted); padding-left:22px; margin-top:28px; }
+</style>
+</head>
+<body>
+<main>
+<img class="logo" src="../assets/icon.png" alt="Chess AI">
+<h1>You're invited to a game of chess</h1>
+<p>Your friend is waiting to play you live on Chess AI.</p>
+<div class="code" id="code">——————</div>
+<p>Game code</p>
+<a class="btn primary" href="https://apps.apple.com/app/id6790178402">Get Chess AI — free</a>
+<a class="btn secondary" id="open" href="chessmaster://play">I have the app — open the game</a>
+<ol>
+<li>Install Chess AI from the App Store.</li>
+<li>Go back to your messages and tap the invite link again — the game opens in the app.</li>
+<li>Or open the app, tap <b>Play a Friend</b> and enter the code.</li>
+</ol>
+</main>
+<script>
+  var code = (new URLSearchParams(location.search).get("g") || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (code) {
+    document.getElementById("code").textContent = code;
+    document.getElementById("open").href = "chessmaster://play?g=" + code;
+  }
+</script>
+</body>
+</html>

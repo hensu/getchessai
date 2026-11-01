@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A free month of Chess AI Diamond</title>
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Get a free month of Chess AI Diamond">
+<meta property="og:description" content="AI coaching on every chess game you play. Redeem the code on the App Store.">
+<meta property="og:image" content="https://getchessai.com/assets/icon.png">
+<link rel="icon" href="/assets/icon.png">
+<!-- GA4 (same property as the app): creator referral funnel. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8JG1S0FTK3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8JG1S0FTK3', { page_title: 'Creator code' });
+</script>
+<style>
+:root { --ground:#14100D; --panel:#1F1813; --ink:#F2E8D8; --muted:#A6947D; --line:#3A2F26; --green:#7FB84A; --dia:#6FA8E0;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--ground); color:var(--ink);
+  font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; -webkit-font-smoothing:antialiased; }
+main { max-width:440px; margin:0 auto; padding:56px 20px 80px; text-align:center; }
+img.logo { width:84px; height:84px; border-radius:20px; margin:0 auto; display:block; }
+h1 { font-family:var(--serif); font-size:30px; line-height:1.2; margin:20px 0 8px; text-wrap:balance; }
+h1 .dia { color:var(--dia); }
+p { color:var(--muted); margin:8px 0; }
+.code { font:700 30px/1 ui-monospace,Menlo,monospace; letter-spacing:4px; background:var(--panel); word-break:break-all;
+  border:1px solid var(--line); border-radius:14px; padding:16px; margin:24px 0 6px; }
+.btn { display:block; padding:16px; border-radius:14px; font-weight:700; text-decoration:none; margin-top:14px; }
+.primary { background:var(--green); color:#14100D; font-size:18px; }
+.secondary { border:1px solid var(--line); color:var(--ink); }
+ul { text-align:left; color:var(--muted); padding-left:22px; margin-top:28px; }
+li { margin:6px 0; }
+.fine { font-size:13px; margin-top:24px; }
+.fine a { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<img class="logo" src="/assets/icon.png" alt="Chess AI">
+<h1 id="title">Get a free month of Chess AI <span class="dia">Diamond</span></h1>
+<p>An AI chess coach that reviews every game you play and shows you exactly where it went wrong.</p>
+<div id="codebox" hidden>
+  <div class="code" id="code"></div>
+  <p>Your offer code</p>
+</div>
+<a class="btn primary" id="redeem" href="https://apps.apple.com/app/id6790178402">Claim your free month</a>
+<a class="btn secondary" id="store" href="https://apps.apple.com/app/id6790178402">Just get the app</a>
+<ul>
+  <li>Tap <b>Claim your free month</b>. The App Store opens with the code filled in.</li>
+  <li>Confirm with your Apple ID, then install Chess AI.</li>
+  <li>Open the app: Diamond is already on. Play a game and tap <b>Get AI Coaching</b>.</li>
+</ul>
+<p class="fine">iPhone and iPad. After the free month, Diamond renews at the regular price unless you cancel in Settings. <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></p>
+</main>
+<script>
+  var params = new URLSearchParams(location.search);
+  var code = (params.get("code") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 32);
+  var name = (params.get("n") || "").replace(/[\u0000-\u001f<>]/g, "").trim().slice(0, 40);
+  var redeem = document.getElementById("redeem");
+  var store = document.getElementById("store");
+  if (code) {
+    document.getElementById("code").textContent = code;
+    document.getElementById("codebox").hidden = false;
+    redeem.href = "https://apps.apple.com/redeem?ctx=offercodes&id=6790178402&code=" + code;
+    store.href = "https://apps.apple.com/app/id6790178402?ct=" + encodeURIComponent(("creator-" + code).slice(0, 40)) + "&mt=8";
+  } else {
+    redeem.hidden = true;
+    store.textContent = "Get Chess AI — free";
+    store.className = "btn primary";
+  }
+  if (name && code) {
+    var t = document.getElementById("title");
+    t.textContent = name + " got you a free month of Chess AI ";
+    var d = document.createElement("span");
+    d.className = "dia";
+    d.textContent = "Diamond";
+    t.appendChild(d);
+    document.title = name + " got you a free month of Chess AI Diamond";
+  }
+  gtag('event', 'creator_page_viewed', { code: code || '(none)' });
+  redeem.addEventListener('click', function () {
+    gtag('event', 'creator_redeem_clicked', { code: code });
+  });
+  store.addEventListener('click', function () {
+    gtag('event', 'creator_appstore_clicked', { code: code || '(none)' });
+  });
+</script>
+</body>
+</html>

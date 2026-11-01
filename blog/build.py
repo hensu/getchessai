@@ -57,6 +57,7 @@ FOOT = """<footer>
   <div class="wrap">
     <span>© 2026 Hensu LLC</span>
     <a href="/blog/">Blog</a>
+    <a href="/creators/">Creators</a>
     <a href="/support.html">Support</a>
     <a href="/privacy.html">Privacy</a>
     <a href="/terms.html">Terms</a>
@@ -127,7 +128,8 @@ def main():
              f'<div class="cards">{cards}</div></main>\n')
     (ROOT / "blog/index.html").write_text(page(index_meta, index, f"{SITE}/blog/", "website"))
 
-    urls = [f"{SITE}/", f"{SITE}/blog/"] + [f"{SITE}/blog/{m['slug']}/" for m, _ in posts]
+    # /c/ (creator code landing pages) is deliberately not listed — see robots.txt.
+    urls = [f"{SITE}/", f"{SITE}/blog/", f"{SITE}/creators/"] + [f"{SITE}/blog/{m['slug']}/" for m, _ in posts]
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")

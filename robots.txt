@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /blog/_src/
+Disallow: /play/
+
+Sitemap: https://getchessai.com/sitemap.xml

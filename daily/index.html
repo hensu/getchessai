@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess AI Daily Puzzle</title>
+<meta name="description" content="One chess puzzle a day, the same for everyone. Solve it in Chess AI, keep your streak and share your result.">
+<link rel="canonical" href="https://getchessai.com/daily/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chess AI Daily Puzzle: can you solve today's?">
+<meta property="og:description" content="One puzzle a day, the same for everyone. Keep your streak going.">
+<meta property="og:url" content="https://getchessai.com/daily/">
+<meta property="og:image" content="https://getchessai.com/assets/shot-puzzle.png">
+<link rel="icon" href="/assets/icon.png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="stylesheet" href="/blog/blog.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8JG1S0FTK3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8JG1S0FTK3', { page_title: 'Daily' });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('a[href*="apps.apple.com"]')) gtag('event', 'daily_appstore_clicked');
+  });
+</script>
+<style>
+.hero { padding-top: 48px; text-align: center; }
+.hero h1 { font-size: clamp(36px, 7vw, 56px); }
+.num { color: var(--green); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 14px; margin: 0; }
+.squares { font-size: 34px; letter-spacing: 4px; margin: 10px 0 4px; }
+.big { display: inline-block; margin-top: 18px; padding: 14px 26px; font-size: 17px; }
+.shot { max-width: 300px; margin: 36px auto 0; border-radius: 30px; border: 1px solid var(--line); overflow: hidden; }
+.steps { text-align: left; max-width: 520px; margin: 40px auto 0; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="">Chess AI</a>
+    <div class="links">
+      <a href="/blog/">Blog</a>
+      <a class="cta" href="https://apps.apple.com/app/id6790178402?ct=daily&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+<main class="wrap post hero">
+  <p class="num" id="num">Daily Puzzle</p>
+  <h1>One puzzle a day. Same one for everyone.</h1>
+  <div class="squares" aria-hidden="true">🟥🟩 🔥</div>
+  <p class="lede">A friend just shared their result. Solve today's puzzle in Chess AI, see how you compare, and keep your streak going.</p>
+  <a class="cta big" href="https://apps.apple.com/app/id6790178402?ct=daily&amp;mt=8">Play today's puzzle</a>
+  <p style="color:var(--muted);font-size:14px">Free on iPhone</p>
+  <div class="shot"><img src="/assets/shot-puzzle.png" alt="A chess puzzle in Chess AI"></div>
+  <div class="steps">
+    <h2>How it works</h2>
+    <ol>
+      <li>A new puzzle every day at midnight, the same for every player.</li>
+      <li>Find the winning line. Each wrong try is a 🟥, the solve is a 🟩.</li>
+      <li>Solve it every day to build your 🔥 streak, then share your result.</li>
+    </ol>
+  </div>
+</main>
+<script>
+  // Daily #1 = 2026-11-01 (local), matching the app.
+  var start = new Date(2026, 10, 1), now = new Date();
+  var n = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - start) / 86400000) + 1;
+  if (n >= 1) document.getElementById('num').textContent = "Today's puzzle: Daily #" + n;
+</script>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Hensu LLC</span>
+    <a href="/blog/">Blog</a>
+    <a href="/creators/">Creators</a>
+    <a href="/support.html">Support</a>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+</body>
+</html>

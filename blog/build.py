@@ -129,7 +129,7 @@ def main():
     (ROOT / "blog/index.html").write_text(page(index_meta, index, f"{SITE}/blog/", "website"))
 
     # /c/ (creator code landing pages) is deliberately not listed — see robots.txt.
-    urls = [f"{SITE}/", f"{SITE}/blog/", f"{SITE}/creators/"] + [f"{SITE}/blog/{m['slug']}/" for m, _ in posts]
+    urls = [f"{SITE}/", f"{SITE}/blog/", f"{SITE}/creators/", f"{SITE}/daily/"] + [f"{SITE}/blog/{m['slug']}/" for m, _ in posts]
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
